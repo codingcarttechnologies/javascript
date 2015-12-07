@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+div#test{ border:#000 1px solid; padding:10px 40px 40px 40px; }
+</style>
+<script>
+var pos = 0, test, test_status, question, choice, choices, chA, chB, chC, correct = 0;
+var questions = [
+    [ "What is PHP?", "CMS", "Server Side Scripting language", "Any Framework", "B" ],
+	[ "What is the use of Count?", "Use to Calculate data ", "Count variable", "count() is used to count all elements in an array", "C" ],
+	[ "Why We use Mysqli rather then mysql?", "Secured Version", "Improved and Secured Version", "Latest version", "B" ],
+	[ "All variables in PHP start with which symbol?", "&", "!", "$", "C" ],
+	[ "How we integrate another php file to another one?", "require()", "Include()", "Both A&B", "C" ],
+	[ "What is the previous version of HTML, prior to HTML5?", "HTML4.9", "HTML 4.01 ", "HTML 4", "B" ],
+	[ "Which HTML5 element is used to specify a footer for a document or section?", "bottom", "section", "footer", "C" ],
+	[ "Which SQL statement is used to extract data from a database?", "EXTRACT","SELECT","GET", "B"],
+	[ "Which SQL statement is used to insert new data in a database?", "INSERT INTO", "ADD NEW", "INSERT NEW", "A"],
+	[ "What is WordPress,Joomla?", "Ecommerce", "CMS", "Framework", "B" ],
+	[ "Who is making the Web standards?", "Google", "Mozilla", "Wide Web Consortium", "C" ],
+	[ "What does HTML stand for?","Hyperlinks and Text Markup Language","Hyper Text Markup Language","Hyper Tool Markup Language","B"]
+	
+	
+	
+];
+function _(x){
+	return document.getElementById(x);
+}
+function renderQuestion(){
+	test = _("test");
+	if(pos >= questions.length){
+		test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
+		_("test_status").innerHTML = "Test Completed";
+		pos = 0;
+		correct = 0;
+		return false;
+	}
+	_("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
+	question = questions[pos][0];
+	chA = questions[pos][1];
+	chB = questions[pos][2];
+	chC = questions[pos][3];
+	test.innerHTML = "<h3>"+question+"</h3>";
+	test.innerHTML += "<input type='radio' name='choices' value='A'> "+chA+"<br>";
+	test.innerHTML += "<input type='radio' name='choices' value='B'> "+chB+"<br>";
+	test.innerHTML += "<input type='radio' name='choices' value='C'> "+chC+"<br><br>";
+	test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
+}
+function checkAnswer(){
+	choices = document.getElementsByName("choices");
+	for(var i=0; i<choices.length; i++){
+		if(choices[i].checked){
+			choice = choices[i].value;
+		}
+	}
+	if(choice == questions[pos][4]){
+		correct++;
+	}
+	pos++;
+	renderQuestion();
+}
+window.addEventListener("load", renderQuestion, false);
+</script>
+</head>
+<body>
+<h2 id="test_status"></h2>
+<div id="test"></div>
+</body>
+</html>
